@@ -31,7 +31,7 @@ public class OrderServiceTest {
     OrderRepository orderRepository;
 
     @Test
-    public void 주문(){
+    public void 주문하기(){
         Member member = new Member();
         member.setName("박세헌");
         member.setAddress(new Address("서울", "바오", "광교"));
