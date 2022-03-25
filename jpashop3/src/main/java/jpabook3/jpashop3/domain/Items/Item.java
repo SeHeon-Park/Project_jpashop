@@ -4,22 +4,17 @@ import javax.persistence.*;
 
 import jpabook3.jpashop3.domain.Category;
 import jpabook3.jpashop3.exception.NotEnoughStockException;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name = "DTYPE")
-public class Item {
+@DiscriminatorColumn(name = "dtype")
+@Getter
+@Setter
+public abstract class Item {
     @Id
     @GeneratedValue
     @Column(name = "item_id")

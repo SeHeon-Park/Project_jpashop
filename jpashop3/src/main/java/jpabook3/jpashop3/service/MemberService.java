@@ -30,8 +30,8 @@ public class MemberService {
         }
     }
 
-    public List<Member> findMembers(String name){
-        return memberRepository.findByName(name);
+    public List<Member> findMembers(){
+        return memberRepository.findAll();
     }
 
     public Member findOne(Long id){
