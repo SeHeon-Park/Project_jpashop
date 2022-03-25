@@ -5,6 +5,7 @@ import jpabook3.jpashop3.domain.Items.Item;
 import jpabook3.jpashop3.domain.Member;
 import jpabook3.jpashop3.domain.Order;
 import jpabook3.jpashop3.domain.OrderStatus;
+import jpabook3.jpashop3.exception.NotEnoughStockException;
 import jpabook3.jpashop3.repository.OrderRepository;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
@@ -51,6 +52,46 @@ public class OrderServiceTest {
         Assertions.assertEquals(1, getOrder.getOrderItems().size());
         Assertions.assertEquals(1000*2, getOrder.getTotalPrice());
         Assertions.assertEquals(8, item.getStockQuantity());
-
     }
+
+    @Test
+    public void 주문_수량_초과(){
+        Member member = new Member();
+        member.setName("박세헌");
+        member.setAddress(new Address("서울", "바오", "광교"));
+        em.persist(member);
+
+        Item item = new Item();
+        item.setName("비틀즈");
+        item.setPrice(1000);
+        item.setStockQuantity(10);
+        em.persist(item);
+
+        Assertions.assertThrows(NotEnoughStockException.class, ()->{
+            orderService.order(member.getId(), item.getId(), 11);
+        });
+    }
+
+    @Test
+    public void 주문취소(){
+        Member member = new Member();
+        member.setName("박세헌");
+        member.setAddress(new Address("서울", "바오", "광교"));
+        em.persist(member);
+
+        Item item = new Item();
+        item.setName("비틀즈");
+        item.setPrice(1000);
+        item.setStockQuantity(10);
+        em.persist(item);
+
+        Long id = orderService.order(member.getId(), item.getId(), 1);
+        Order getOrder = orderRepository.findOne(id);
+        org.assertj.core.api.Assertions.assertThat(9).isEqualTo(item.getStockQuantity());
+
+        orderService.cancelOrder(id);
+        org.assertj.core.api.Assertions.assertThat(OrderStatus.CANCEL).isEqualTo(getOrder.getOrderStatus());
+        org.assertj.core.api.Assertions.assertThat(10).isEqualTo(item.getStockQuantity());
+    }
+
 }
