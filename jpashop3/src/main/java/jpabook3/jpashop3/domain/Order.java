@@ -26,17 +26,17 @@ public class Order {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems = new ArrayList<>();
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "delivery_id")
     private Delivery delivery;
 
-    private LocalDateTime orderdate;
+    private LocalDateTime orderDate;
 
     @Enumerated(EnumType.STRING)
-    private OrderStatus orderStatus;
+    private OrderStatus status;
 
     //==연관관계 메소드==//
     public void setMember(Member member){
@@ -62,18 +62,18 @@ public class Order {
         for (OrderItem orderItem : orderItems) {
             order.setOrderItem(orderItem);
         }
-        order.setOrderStatus(OrderStatus.ORDER);
-        order.setOrderdate(LocalDateTime.now());
+        order.setStatus(OrderStatus.ORDER);
+        order.setOrderDate(LocalDateTime.now());
         return order;
     }
 
     //==비즈니스 로직==//
     public void cancelOrder(){
-        if(this.getOrderStatus() == OrderStatus.COMP){
+        if(this.getStatus() == OrderStatus.COMP){
             throw new IllegalStateException("이미 배송이 완료된 상품입니다.");
         }
         else{
-            this.setOrderStatus(OrderStatus.CANCEL);
+            this.setStatus(OrderStatus.CANCEL);
             for (OrderItem orderItem: orderItems) {
                 orderItem.cancel();
             }

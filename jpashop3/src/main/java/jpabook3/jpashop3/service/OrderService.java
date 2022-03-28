@@ -27,7 +27,7 @@ public class OrderService {
 
         Delivery delivery = new Delivery();
         delivery.setAddress(member.getAddress());
-        delivery.setDeliveryStatus(DeliveryStatus.COMPANY);
+        delivery.setDeliveryStatus(DeliveryStatus.READY);
 
         OrderItem orderItem = OrderItem.createOrderItem(item, item.getPrice(), count);
         Order order = Order.createOrder(member, delivery, orderItem);
@@ -43,6 +43,8 @@ public class OrderService {
     }
 
 
-//    public List<Order> findOrders(){}
+    public List<Order> findOrders(OrderSearch orderSearch){
+        return orderRepository.findAllByCriteria(orderSearch);
+    }
 
 }

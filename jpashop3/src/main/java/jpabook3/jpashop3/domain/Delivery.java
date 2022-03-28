@@ -2,15 +2,9 @@ package jpabook3.jpashop3.domain;
 
 import javax.persistence.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
+@Getter @Setter
 @Entity
 public class Delivery {
 

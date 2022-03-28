@@ -17,8 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 
-import static org.junit.Assert.*;
-
 @SpringBootTest
 @Transactional
 @RunWith(SpringRunner.class)
@@ -48,7 +46,7 @@ public class OrderServiceTest {
 
         Order getOrder = orderRepository.findOne(id);
 
-        Assertions.assertEquals(OrderStatus.ORDER, getOrder.getOrderStatus());
+        Assertions.assertEquals(OrderStatus.ORDER, getOrder.getStatus());
         Assertions.assertEquals(1, getOrder.getOrderItems().size());
         Assertions.assertEquals(1000*2, getOrder.getTotalPrice());
         Assertions.assertEquals(8, item.getStockQuantity());
@@ -90,7 +88,7 @@ public class OrderServiceTest {
         org.assertj.core.api.Assertions.assertThat(9).isEqualTo(item.getStockQuantity());
 
         orderService.cancelOrder(id);
-        org.assertj.core.api.Assertions.assertThat(OrderStatus.CANCEL).isEqualTo(getOrder.getOrderStatus());
+        org.assertj.core.api.Assertions.assertThat(OrderStatus.CANCEL).isEqualTo(getOrder.getStatus());
         org.assertj.core.api.Assertions.assertThat(10).isEqualTo(item.getStockQuantity());
     }
 

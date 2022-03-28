@@ -3,7 +3,6 @@ package jpabook3.jpashop3.repository;
 import jpabook3.jpashop3.domain.Member;
 import jpabook3.jpashop3.domain.Order;
 import jpabook3.jpashop3.domain.OrderSearch;
-import jpabook3.jpashop3.domain.OrderStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
