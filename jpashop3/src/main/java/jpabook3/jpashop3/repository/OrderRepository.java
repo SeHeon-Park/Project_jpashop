@@ -49,4 +49,12 @@ public class OrderRepository {
         TypedQuery<Order> query = em.createQuery(cq).setMaxResults(1000); //최대
         return query.getResultList();
     }
+
+    public List<Order> findOrdersWithMemberDelivery() {
+        return em.createQuery(  // fetch join을 하면 lazy로딩 무시됨(처음 한번에 불러옴)
+                "select o from Order o" +
+                " join fetch o.member m" +
+                " join fetch o.delivery d", Order.class)
+                .getResultList();
+    }
 }
