@@ -2,7 +2,7 @@ package jpabook3.jpashop3.repository;
 
 import jpabook3.jpashop3.domain.Member;
 import jpabook3.jpashop3.domain.Order;
-import jpabook3.jpashop3.domain.OrderSearch;
+import jpabook3.jpashop3.repository.order.simplequery.OrderSimpleQueryDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
@@ -56,5 +56,16 @@ public class OrderRepository {
                 " join fetch o.member m" +
                 " join fetch o.delivery d", Order.class)
                 .getResultList();
+    }
+
+    public List<Order> findOrderWithFetch() {
+        return em.createQuery("" +
+                "select distinct o from Order o" +
+                " join fetch o.member m" +
+                " join fetch o.delivery d" +
+                " join fetch o.orderItems oi" +
+                " join fetch oi.item i", Order.class)
+                .getResultList();
+
     }
 }

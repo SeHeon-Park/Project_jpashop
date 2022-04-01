@@ -2,9 +2,11 @@ package jpabook3.jpashop3.api;
 
 import jpabook3.jpashop3.domain.Address;
 import jpabook3.jpashop3.domain.Order;
-import jpabook3.jpashop3.domain.OrderSearch;
+import jpabook3.jpashop3.repository.OrderSearch;
 import jpabook3.jpashop3.domain.OrderStatus;
 import jpabook3.jpashop3.repository.OrderRepository;
+import jpabook3.jpashop3.repository.order.simplequery.OrderSimpleQueryDto;
+import jpabook3.jpashop3.repository.order.simplequery.OrderSimpleQueryRepository;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +20,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class OrderSimpleApiController {
     private final OrderRepository orderRepository;
+    private final OrderSimpleQueryRepository orderSimpleQueryRepository;
 
     //v1은 그냥 리스트 형태로 return(하지마..)
 
@@ -40,6 +43,11 @@ public class OrderSimpleApiController {
         return result;
     }
 
+    @GetMapping("/api/v4/simple-orders")
+    public List<OrderSimpleQueryDto> orderV4() {
+       return orderSimpleQueryRepository.findOrderDtos();
+    }
+
     @Data
     static class SimpleOrderDto{
         private Long orderId;
@@ -55,6 +63,6 @@ public class OrderSimpleApiController {
             this.status = order.getStatus();
             this.address = order.getDelivery().getAddress(); //lazy초기화 // 1+n+n 번 쿼리가 실행됨(성능 저하..)
         }
-
     }
+
 }

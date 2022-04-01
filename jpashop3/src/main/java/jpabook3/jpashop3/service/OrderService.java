@@ -5,6 +5,7 @@ import jpabook3.jpashop3.domain.Items.Item;
 import jpabook3.jpashop3.repository.ItemRepository;
 import jpabook3.jpashop3.repository.MemberRepository;
 import jpabook3.jpashop3.repository.OrderRepository;
+import jpabook3.jpashop3.repository.OrderSearch;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
