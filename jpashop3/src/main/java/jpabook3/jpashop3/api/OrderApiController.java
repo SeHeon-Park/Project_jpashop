@@ -24,7 +24,7 @@ public class OrderApiController {
     private final OrderRepository orderRepository;
 
     @GetMapping("/api/v1/orders")
-    public List<Order> orderV1(){
+    public List<Order> orderV1(){ // Entity로 관계 맺기
         List<Order> order = orderRepository.findAllByCriteria(new OrderSearch());
         for (Order o : order) {
             o.getMember().getName();
@@ -36,13 +36,13 @@ public class OrderApiController {
         return order;
     }
 
-    @GetMapping("/api/v2/orders")
+    @GetMapping("/api/v2/orders") // Dto로 관계맺기
     public List<OrderDto> orderV2(){
         List<Order> order = orderRepository.findAllByCriteria(new OrderSearch());
         return order.stream().map(o -> new OrderDto(o)).collect(Collectors.toList());
     }
 
-    @GetMapping("/api/v3/orders")
+    @GetMapping("/api/v3/orders") // fetch join
     public List<OrderDto> orderV3(){
         List<Order> orders = orderRepository.findOrderWithFetch();
         return orders.stream().map(o->new OrderDto(o)).collect(Collectors.toList());
