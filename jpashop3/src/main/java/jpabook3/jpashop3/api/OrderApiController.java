@@ -42,7 +42,7 @@ public class OrderApiController {
         return order.stream().map(o -> new OrderDto(o)).collect(Collectors.toList());
     }
 
-    @GetMapping("/api/v3/orders") // fetch join
+    @GetMapping("/api/v3/orders") // fetch join // 코드가 같음
     public List<OrderDto> orderV3(){
         List<Order> orders = orderRepository.findOrderWithFetch();
         return orders.stream().map(o->new OrderDto(o)).collect(Collectors.toList());
