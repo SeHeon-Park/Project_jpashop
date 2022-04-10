@@ -1,7 +1,10 @@
 package jpabook3.jpashop3.repository;
 
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import jpabook3.jpashop3.domain.Member;
 import jpabook3.jpashop3.domain.Order;
+import jpabook3.jpashop3.domain.QMember;
+import jpabook3.jpashop3.domain.QOrder;
 import jpabook3.jpashop3.repository.order.simplequery.OrderSimpleQueryDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -50,6 +53,20 @@ public class OrderRepository {
         return query.getResultList();
     }
 
+    // QueryDsl 이용
+    public List<Order> findAll(OrderSearch orderSearch){
+        QOrder order = QOrder.order;
+        QMember member = QMember.member;
+
+        JPAQueryFactory query = new JPAQueryFactory(em);
+        return query
+                .select(order)
+                .from(order)
+                .join(order.member, member)
+                .limit(1000)
+                .fetch();
+    }
+
     public List<Order> findOrdersWithMemberDelivery() {
         return em.createQuery(  // fetch join을 하면 lazy로딩 무시됨(처음 한번에 불러옴)
                 "select o from Order o" +
@@ -66,6 +83,15 @@ public class OrderRepository {
                 " join fetch o.orderItems oi" +
                 " join fetch oi.item i", Order.class)
                 .getResultList();
+    }
 
+    public List<Order> findOrderWithFetch(int offset, int limit) {
+        return em.createQuery(  // fetch join을 하면 lazy로딩 무시됨(처음 한번에 불러옴)
+                        "select o from Order o" +
+                                " join fetch o.member m" +
+                                " join fetch o.delivery d", Order.class)
+                .setFirstResult(offset)
+                .setMaxResults(limit)
+                .getResultList();
     }
 }

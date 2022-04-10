@@ -1,8 +1,7 @@
 package jpabook3.jpashop3.service;
 
 import jpabook3.jpashop3.domain.Member;
-import jpabook3.jpashop3.repository.MemberRepository;
-import org.assertj.core.api.Assertions;
+import jpabook3.jpashop3.repository.MemberRepositoryOld;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,14 +10,13 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Transactional
 public class MemberServiceTest {
     @Autowired
-    MemberRepository memberRepository;
+    MemberRepositoryOld memberRepository;
 
     @Autowired
     MemberService memberService;

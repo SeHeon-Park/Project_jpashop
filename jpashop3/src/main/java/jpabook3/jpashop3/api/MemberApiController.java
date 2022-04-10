@@ -18,7 +18,7 @@ public class MemberApiController {
 
     @PostMapping("/api/v1/members")
     public CreateMemberResponse saveMemberV1(@RequestBody @Valid Member member){
-        Long id = memberService.join(member);
+        Long id = memberService.join(member).getId();
         return new CreateMemberResponse(id);
     }
 
@@ -26,7 +26,7 @@ public class MemberApiController {
     public CreateMemberResponse saveMemberV2(@RequestBody @Valid CreateMemberRequest request){
         Member member = new Member();
         member.setName(request.getName());
-        Long id = memberService.join(member);
+        Long id = memberService.join(member).getId();
 
         return new CreateMemberResponse(id);
     }

@@ -2,7 +2,6 @@ package jpabook3.jpashop3;
 
 import jpabook3.jpashop3.domain.*;
 import jpabook3.jpashop3.domain.Items.Book;
-import jpabook3.jpashop3.domain.Items.Item;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;

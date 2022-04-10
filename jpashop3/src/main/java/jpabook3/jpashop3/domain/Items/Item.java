@@ -24,21 +24,21 @@ public abstract class Item {
 
     private int price;
 
-    private int StockQuantity;
+    private int stockQuantity;
 
     @ManyToMany(mappedBy = "items")
     private List<Category> categories = new ArrayList<>();
 
     //==비즈니스 로직==//
     public void addStock(int quantity){
-        this.StockQuantity += quantity;
+        this.stockQuantity += quantity;
     }
 
     public void removeStock(int quantity){
-        int resStock = this.StockQuantity - quantity;
+        int resStock = this.stockQuantity - quantity;
         if (resStock < 0){
             throw new NotEnoughStockException("need more stock");
         }
-        this.StockQuantity = resStock;
+        this.stockQuantity = resStock;
     }
 }
